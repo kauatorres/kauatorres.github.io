@@ -1,551 +1,954 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kauã Torres | Desenvolvedor de Software</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Poppins", "Inter", sans-serif;
+      }
+    </style>
+
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#4f46e5',
-                        accent: '#ec4899',
-                        dark: '#0f172a',
-                        light: '#f8fafc',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 3s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    },
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1F2937",        // cinza escuro, textos e fundo neutro
+              secondary: "#4F46E5",      // azul/roxo vibrante, destaques/botões
+              accent: "#F59E0B",         // laranja, detalhes chamativos
+              "neutral-light": "#F3F4F6",// fundo claro e seções
+              "neutral-dark": "#111827", // contraste em textos/cabeçalhos
+            },
+            animation: {
+              float: "float 3s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+          },
+        },
+      };
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #6366f1, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-        }
-        .gradient-border {
-            position: relative;
-            border-radius: 0.5rem;
-            z-index: 0;
-        }
-        .gradient-border::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #6366f1, #ec4899, #6366f1);
-            z-index: -1;
-            border-radius: 0.6rem;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            z-index: -1;
-            opacity: 0.4;
-        }
-        .noise-bg {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            opacity: 0.05;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #F3F4F6; /* Usando a cor Neutra clara para o fundo */
+        color: #1F2937; /* Usando a cor Primária para o texto padrão */
+      }
+      .gradient-text {
+        background: linear-gradient(to right, #4F46E5, #F59E0B); /* Secundária -> Acento */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #4F46E5, #1F2937); /* Secundária -> Primária */
+      }
+      .gradient-border {
+        position: relative;
+        border-radius: 0.5rem;
+        z-index: 0;
+      }
+      .gradient-border::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #4F46E5, #F59E0B, #4F46E5);
+        z-index: -1;
+        border-radius: 0.6rem;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        z-index: -1;
+        opacity: 0.4;
+      }
+      .noise-bg {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        opacity: 0.05;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
     </style>
-</head>
-<body class="bg-light text-dark">
+  </head>
+  <body class="bg-light text-dark">
     <div class="noise-bg"></div>
-    
+
     <!-- Blobs -->
     <div class="blob bg-primary w-96 h-96 top-0 left-0"></div>
     <div class="blob bg-accent w-96 h-96 bottom-0 right-0"></div>
-    
+
     <!-- Navbar -->
     <nav class="fixed w-full z-50 backdrop-blur-md bg-white/80 shadow-sm">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold font-display gradient-text">KT</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#sobre" class="font-medium hover:text-primary transition-colors">Sobre</a>
-                <a href="#habilidades" class="font-medium hover:text-primary transition-colors">Habilidades</a>
-                <a href="#projetos" class="font-medium hover:text-primary transition-colors">Projetos</a>
-                <a href="#contato" class="font-medium hover:text-primary transition-colors">Contato</a>
-            </div>
-            <button class="md:hidden text-dark focus:outline-none" id="menu-button">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="#" class="text-2xl font-bold font-display gradient-text">KT</a>
+        <div class="hidden md:flex space-x-8">
+          <a
+            href="#sobre"
+            class="font-medium hover:text-primary transition-colors"
+            >Sobre</a
+          >
+          <a
+            href="#habilidades"
+            class="font-medium hover:text-primary transition-colors"
+            >Habilidades</a
+          >
+          <a
+            href="#projetos"
+            class="font-medium hover:text-primary transition-colors"
+            >Projetos</a
+          >
+          <a
+            href="#contato"
+            class="font-medium hover:text-primary transition-colors"
+            >Contato</a
+          >
         </div>
-        <!-- Mobile menu -->
-        <div class="md:hidden hidden bg-white/95 backdrop-blur-md w-full absolute transition-all duration-300 ease-in-out transform" id="mobile-menu">
-            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
-                <a href="#sobre" class="font-medium hover:text-primary transition-colors">Sobre</a>
-                <a href="#habilidades" class="font-medium hover:text-primary transition-colors">Habilidades</a>
-                <a href="#projetos" class="font-medium hover:text-primary transition-colors">Projetos</a>
-                <a href="#contato" class="font-medium hover:text-primary transition-colors">Contato</a>
-            </div>
+        <button class="md:hidden text-dark focus:outline-none" id="menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div
+        class="md:hidden hidden bg-white/95 backdrop-blur-md w-full absolute transition-all duration-300 ease-in-out transform"
+        id="mobile-menu"
+      >
+        <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+          <a
+            href="#sobre"
+            class="font-medium hover:text-primary transition-colors"
+            >Sobre</a
+          >
+          <a
+            href="#habilidades"
+            class="font-medium hover:text-primary transition-colors"
+            >Habilidades</a
+          >
+          <a
+            href="#projetos"
+            class="font-medium hover:text-primary transition-colors"
+            >Projetos</a
+          >
+          <a
+            href="#contato"
+            class="font-medium hover:text-primary transition-colors"
+            >Contato</a
+          >
         </div>
+      </div>
     </nav>
 
     <header class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
-                    <span class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Desenvolvedor Full Stack</span>
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold font-display mb-6">
-                        Kauã <span class="gradient-text">Torres</span>
-                    </h1>
-                    <p class="text-xl text-gray-600 mb-8 max-w-lg">Transformando ideias em experiências digitais inovadoras e impactantes para o mundo moderno.</p>
-                    <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#contato" class="gradient-bg text-white font-medium px-8 py-4 rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-all">Entre em contato</a>
-                        <a href="#projetos" class="bg-white border border-gray-200 text-dark font-medium px-8 py-4 rounded-xl hover:shadow-lg transition-all flex items-center justify-center">
-                            <span>Ver projetos</span>
-                            <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                    <div class="flex items-center justify-center md:justify-start mt-12 space-x-6">
-                        <a href="https://github.com/kauatorres" class="text-gray-400 hover:text-primary transition-colors">
-                            <i class="fab fa-github text-2xl"></i>
-                        </a>
-                        <a href="https://linkedin.com/in/kauatorress" class="text-gray-400 hover:text-primary transition-colors">
-                            <i class="fab fa-linkedin text-2xl"></i>
-                        </a>
-                        <a href="https://instagram.com/kauatorress" class="text-gray-400 hover:text-primary transition-colors">
-                            <i class="fab fa-instagram text-2xl"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center md:justify-end relative">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-full blur-3xl opacity-20 animate-float"></div>
-                        <div class="w-72 h-72 md:w-96 md:h-96 bg-white rounded-full overflow-hidden border-4 border-white shadow-xl relative z-0">
-                            <img src="assets/kaua.jpg" alt="Kauã Torres" class="w-full h-full object-cover">
-                        </div>
-                        <div class="absolute -bottom-4 -right-4 w-24 h-24 gradient-bg rounded-full flex items-center justify-center text-white text-3xl shadow-lg z-20">
-                            <i class="fas fa-code"></i>
-                        </div>
-                    </div>
-                </div>
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
+            <span
+              class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6"
+              >Desenvolvedor Full Stack</span
+            >
+            <h1
+              class="text-5xl md:text-6xl lg:text-7xl font-bold font-display mb-6"
+            >
+              Kauã <span class="gradient-text">Torres</span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-lg">
+              Desenvolvendo soluções tecnológicas que resolvem problemas reais e proporcionam experiências.
+            </p>
+            <div
+              class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4"
+            >
+              <a
+                href="#contato"
+                class="gradient-bg text-white font-medium px-8 py-4 rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-all"
+                >Entre em contato</a
+              >
+              <a
+                href="#projetos"
+                class="bg-white border border-gray-200 text-dark font-medium px-8 py-4 rounded-xl hover:shadow-lg transition-all flex items-center justify-center"
+              >
+                <span>Ver projetos</span>
+                <i class="fas fa-arrow-right ml-2"></i>
+              </a>
             </div>
-            
-            <div class="mt-20 py-8 px-6 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg">
-                <p class="text-center text-gray-500 mb-6">Tecnologias que utilizo</p>
-                <div class="flex flex-wrap justify-center gap-8 md:gap-12">
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-react text-4xl text-blue-500"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-node-js text-4xl text-green-600"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-js text-4xl text-yellow-500"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-aws text-4xl text-orange-400"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-laravel text-4xl text-red-500"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-python text-4xl text-blue-600"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-php text-4xl text-purple-500"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fas fa-database text-4xl text-blue-400"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-html5 text-4xl text-orange-500"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-css3-alt text-4xl text-blue-500"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-git-alt text-4xl text-orange-600"></i>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all">
-                        <i class="fab fa-bootstrap text-4xl text-purple-600"></i>
-                    </div>
-                </div>
+            <div
+              class="flex items-center justify-center md:justify-start mt-12 space-x-6"
+            >
+              <a
+                href="https://github.com/kauatorres"
+                class="text-gray-400 hover:text-primary transition-colors"
+              >
+                <i class="fab fa-github text-2xl"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/kauatorress"
+                class="text-gray-400 hover:text-primary transition-colors"
+              >
+                <i class="fab fa-linkedin text-2xl"></i>
+              </a>
+              <a
+                href="https://instagram.com/kauatorress"
+                class="text-gray-400 hover:text-primary transition-colors"
+              >
+                <i class="fab fa-instagram text-2xl"></i>
+              </a>
             </div>
+          </div>
+          <div class="md:w-1/2 flex justify-center md:justify-end relative">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-full blur-3xl opacity-20 animate-float"
+              ></div>
+              <div
+                class="w-72 h-72 md:w-96 md:h-96 bg-white rounded-full overflow-hidden border-4 border-white shadow-xl relative z-0"
+              >
+                <img
+                  src="assets/kaua.jpg"
+                  alt="Kauã Torres"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div
+                class="absolute -bottom-4 -right-4 w-24 h-24 gradient-bg rounded-full flex items-center justify-center text-white text-3xl shadow-lg z-20"
+              >
+                <i class="fas fa-code"></i>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div
+          class="mt-20 py-8 px-6 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg"
+        >
+          <p class="text-center text-gray-500 mb-6">Tecnologias que utilizo</p>
+          <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-react text-4xl text-blue-500"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-node-js text-4xl text-green-600"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-js text-4xl text-yellow-500"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-aws text-4xl text-orange-400"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-laravel text-4xl text-red-500"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-python text-4xl text-blue-600"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-php text-4xl text-purple-500"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fas fa-database text-4xl text-blue-400"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-html5 text-4xl text-orange-500"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-css3-alt text-4xl text-blue-500"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-git-alt text-4xl text-orange-600"></i>
+            </div>
+            <div
+              class="flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all"
+            >
+              <i class="fab fa-bootstrap text-4xl text-purple-600"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
 
     <!-- Sobre Section -->
     <section id="sobre" class="py-20 md:py-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-16">
-                <div class="md:w-5/12">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-2xl blur-3xl opacity-20"></div>
-                        <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl">
-                            <img src="assets/index-img.png" alt="Kauã Torres" class="w-full h-auto">
-                        </div>
-                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-white rounded-2xl shadow-lg flex items-center justify-center p-4 z-20">
-                            <span class="text-4xl gradient-text font-bold font-display">+5</span>
-                            <span class="text-xs text-gray-500 ml-1">Anos de<br>Experiência</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="md:w-7/12">
-                    <span class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Sobre mim</span>
-                    <h2 class="text-4xl md:text-5xl font-bold font-display mb-8">Transformando <span class="gradient-text">ideias</span> em realidade digital</h2>
-                    <p class="text-lg text-gray-600 mb-6">Olá! Sou Kauã Torres, um desenvolvedor de software apaixonado por criar soluções tecnológicas que resolvem problemas reais e proporcionam experiências excepcionais.</p>
-                    <p class="text-lg text-gray-600 mb-8">Com experiência em desenvolvimento de software, trabalho com as tecnologias mais recentes para entregar produtos de alta qualidade que atendem às necessidades dos usuários e superam expectativas.</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-10">
-                        <div class="bg-white p-6 rounded-xl shadow-sm">
-                            <div class="text-primary text-2xl mb-3">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Desenvolvimento Web</h3>
-                            <p class="text-gray-600">Desenvolvo sites e aplicações web modernas e personalizadas, focando em design responsivo, performance e usabilidade. Transformo suas ideias em soluções digitais eficientes que atendem perfeitamente às necessidades do seu negócio.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm">
-                            <div class="text-primary text-2xl mb-3">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Integrações de Pagamento</h3>
-                            <p class="text-gray-600">Implemento soluções completas de pagamento, integrando seu site com as principais plataformas do mercado como PagSeguro, MercadoPago, PayPal e Stripe, garantindo transações seguras e uma experiência fluida para seus clientes.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm">
-                            <div class="text-primary text-2xl mb-3">
-                                <i class="fas fa-tools"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Manutenção de Sites</h3>
-                            <p class="text-gray-600">Ofereço serviços completos de manutenção de sites, incluindo atualizações regulares de segurança, correções de bugs, otimização de performance e melhorias contínuas para manter seu site funcionando perfeitamente. Garanto que sua presença online esteja sempre atualizada e protegida.</p>
-                        </div>
-                    </div>
-                    
-                    <a href="#contato" class="inline-flex items-center text-primary font-medium hover:text-secondary transition-colors">
-                        <span>Vamos trabalhar juntos</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-16">
+          <div class="md:w-5/12">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-2xl blur-3xl opacity-20"
+              ></div>
+              <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src="assets/index-img.png"
+                  alt="Kauã Torres"
+                  class="w-full h-auto"
+                />
+              </div>
             </div>
+          </div>
+          <div class="md:w-7/12">
+            <span
+              class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6"
+              >Sobre mim</span
+            >
+            <h2 class="text-4xl md:text-5xl font-bold font-display mb-8">
+              Desenvolvendo <span class="gradient-text">soluções</span> que
+              fazem a diferença
+            </h2>
+            <p class="text-lg text-gray-600 mb-6">
+              Olá! Sou Kauã Torres, um desenvolvedor de software, crio soluções
+              tecnológicas que resolvem problemas reais e proporcionam
+              experiências.
+            </p>
+            <p class="text-lg text-gray-600 mb-8">
+              Trabalho com desenvolvimento de sistemas, criando soluções
+              funcionais e bem estruturadas. Atuo na parte de front-end e
+              back-end, sempre buscando melhorar a experiência do usuário e a
+              eficiência do código.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-10">
+              <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-primary text-2xl mb-3">
+                  <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Desenvolvimento Web</h3>
+                <p class="text-gray-600">
+                  Desenvolvo sites e aplicações web modernas e personalizadas,
+                  focando em design responsivo, performance e usabilidade.
+                  Transformo suas ideias em soluções digitais eficientes que
+                  atendem perfeitamente às necessidades do seu negócio.
+                </p>
+              </div>
+              <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-primary text-2xl mb-3">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Integrações de Pagamento</h3>
+                <p class="text-gray-600">
+                  Implemento soluções completas de pagamento, integrando seu
+                  site com as principais plataformas do mercado como PagSeguro,
+                  MercadoPago, PayPal e Stripe, garantindo transações seguras e
+                  uma experiência fluida para seus clientes.
+                </p>
+              </div>
+              <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="text-primary text-2xl mb-3">
+                  <i class="fas fa-tools"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Manutenção de Sites</h3>
+                <p class="text-gray-600">
+                  Ofereço serviços completos de manutenção de sites, incluindo
+                  atualizações regulares de segurança, correções de bugs,
+                  otimização de performance e melhorias contínuas para manter
+                  seu site funcionando perfeitamente. Garanto que sua presença
+                  online esteja sempre atualizada e protegida.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="#contato"
+              class="inline-flex items-center text-primary font-medium hover:text-secondary transition-colors"
+            >
+              <span>Vamos trabalhar juntos</span>
+              <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Habilidades Section -->
     <section id="habilidades" class="py-20 md:py-20 bg-gray-50 relative">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Minhas habilidades</span>
-                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6">Expertise <span class="gradient-text">técnica</span> & criativa</h2>
-                <p class="text-lg text-gray-600">Combinando conhecimento técnico avançado com pensamento criativo para desenvolver soluções inovadoras e eficientes.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Skill -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow group">
-                    <div
-                        class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Backend</h3>
-                    <p class="text-gray-600 mb-6">Desenvolvimento de APIs robustas e sistemas escaláveis com tecnologias modernas.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Node.js</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Python</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">C#</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">ASP.NET</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Laravel</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">PHP</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">AWS</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Git</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">POO</span>
-                    </div>
-                </div>
-                
-                <!-- Skill -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow group">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Frontend</h3>
-                    <p class="text-gray-600 mb-6">Criação de interfaces responsivas e interativas com foco na experiência do usuário.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">React</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">CSS</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Tailwind</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">HTML5</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">JavaScript</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Bootstrap</span>
-                    </div>
-                </div>
-                
-                <!-- Skill -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow group">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Banco de Dados</h3>
-                    <p class="text-gray-600 mb-6">Modelagem e otimização de bancos de dados relacionais e não-relacionais.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">PL/SQL</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">MySQL</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">PostgreSQL</span>
-                    </div>
-                </div>
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6"
+            >Minhas habilidades</span
+          >
+          <p class="text-lg text-gray-600">
+            Combinando conhecimento técnico com pensamento criativo para
+            desenvolver soluções inovadoras e eficientes.
+          </p>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Skill -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow group"
+          >
+            <div
+              class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              <i class="fas fa-server"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Backend</h3>
+            <p class="text-gray-600 mb-6">
+              Desenvolvimento de APIs robustas e sistemas escaláveis com
+              tecnologias modernas.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >Node.js</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >Python</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">C#</span>
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >ASP.NET</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >Laravel</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >PHP</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >AWS</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >Git</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >POO</span
+              >
+            </div>
+          </div>
+
+          <!-- Skill -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow group"
+          >
+            <div
+              class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              <i class="fas fa-code"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Frontend</h3>
+            <p class="text-gray-600 mb-6">
+              Criação de interfaces responsivas e interativas com foco na
+              experiência do usuário.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >React</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >CSS</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >Tailwind</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >HTML5</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >JavaScript</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >Bootstrap</span
+              >
+            </div>
+          </div>
+
+          <!-- Skill -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow group"
+          >
+            <div
+              class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform"
+            >
+              <i class="fas fa-database"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Banco de Dados</h3>
+            <p class="text-gray-600 mb-6">
+              Modelagem e otimização de bancos de dados relacionais e
+              não-relacionais.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >PL/SQL</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >MySQL</span
+              >
+              <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >PostgreSQL</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Projetos Section -->
     <section id="projetos" class="py-20 md:py-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Meu portfólio</span>
-                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6">Projetos <span class="gradient-text">recentes</span></h2>
-                <p class="text-lg text-gray-600">Uma seleção dos meus trabalhos mais recentes, demonstrando minha expertise em diferentes áreas e tecnologias.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Cabergs -->
-                <div class="group">
-                    <div class="relative overflow-hidden rounded-2xl shadow-lg mb-6">
-                        <img src="assets/cabergs.png" alt="Cabergs"
-                            class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <div class="flex space-x-3 mb-4">
-                                    <a href="https://www.cabergs.org.br/" target="_blank"
-                                        class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
-                                        <i class="fas fa-link"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">Cabergs</h3>
-                    <p class="text-gray-600 mb-4">Desenvolvi e atualizei páginas e sistemas com foco em C# e ASP.NET, garantindo a entrega de soluções robustas e eficientes. Identifiquei e corrigi bugs, realizei análise detalhada de erros e otimizei o desempenho dos sistemas. Executei testes funcionais e de qualidade, assegurando o bom funcionamento das aplicações antes da entrega aos usuários finais. Implementei novas funcionalidades e melhorias nos sistemas existentes, sempre alinhado às necessidades dos projetos.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">C#</span>
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">ASP.NET</span>
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">PL/SQL</span>
-                    </div>
-                </div>
-
-                <!-- Caltech Agro -->
-                <div class="group">
-                    <div class="relative overflow-hidden rounded-2xl shadow-lg mb-6">
-                        <img src="assets/caltech.png" alt="Caltech Agro"
-                            class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <div class="flex space-x-3 mb-4">
-                                    <a href="https://www.caltechagro.com/" target="_blank"
-                                        class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
-                                        <i class="fas fa-link"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">Caltech Agro - Robô de Relatórios</h3>
-                    <p class="text-gray-600 mb-4">Desenvolvimento de uma solução automatizada de geração de relatórios via WhatsApp,
-                        integrada a um sistema de gestão interno. O robô processa mensagens recebidas, extrai dados relevantes e gera
-                        relatórios PDF detalhados automaticamente. O sistema web complementar permite visualização, gestão e análise dos
-                        relatórios gerados, oferecendo uma interface intuitiva para acompanhamento e controle das informações.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">Node.js</span>
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">React</span>
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">VPS Linux</span>
-                    </div>
-                </div>
-
-                <!-- Palladium Hotel Group -->
-                <div class="group">
-                    <div class="relative overflow-hidden rounded-2xl shadow-lg mb-6">
-                        <img src="assets/palladium.svg" alt="Palladium Hotel Group" class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <div class="flex space-x-3 mb-4">
-                                    <a href="https://www.palladiumhotelgroup.com/pt" target="_blank" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
-                                        <i class="fas fa-link"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">Palladium Hotel Group</h3>
-                    <p class="text-gray-600 mb-4">Desenvolvimento de dois sistemas críticos para o Palladium Hotel Group: um sistema completo de feedback de colaboradores com avaliações de desempenho, métricas e relatórios personalizados; e um sistema de controle de saída de materiais com assinatura digital integrada, garantindo maior segurança e rastreabilidade nos processos internos.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">Laravel 10</span>
-                    </div>
-                </div>
-                
-               
-               
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6"
+            >Meu portfólio</span
+          >
+          <h2 class="text-4xl md:text-5xl font-bold font-display mb-6">
+            Projetos <span class="gradient-text">recentes</span>
+          </h2>
+          <p class="text-lg text-gray-600">
+            Uma seleção dos meus trabalhos mais recentes, demonstrando minha
+            expertise em diferentes áreas e tecnologias.
+          </p>
         </div>
-    </section>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Comunica Cabergs -->
+          <!-- Cabergs -->
+          <div class="group">
+            <div
+              class="relative overflow-hidden rounded-2xl shadow-lg mb-6"
+              style="background-color: #000000"
+            >
+              <img
+                src="assets/cabergs.png"
+                alt="Cabergs"
+                class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110"
+                style="filter: brightness(0) invert(1)"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <div class="p-6">
+                  <div class="flex space-x-3 mb-4">
+                    <a
+                      href="https://comunica.cabergs.org.br/"
+                      target="_blank"
+                      class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
+                    >
+                      <i class="fas fa-link"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Blog Cabergs - Comunica</h3>
+            <p class="text-gray-600 mb-4">
+              Blog desenvolvido para a Cabergs com C# e ASP.NET, para postagens
+              de blogs, notícias, programas e revistas.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >C#</span
+              >
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >ASP.NET</span
+              >
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >PL/SQL</span
+              >
+            </div>
+          </div>
+          <!-- Cabergs -->
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg mb-6">
+              <img
+                src="assets/cabergs.png"
+                alt="Cabergs"
+                class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <div class="p-6">
+                  <div class="flex space-x-3 mb-4">
+                    <a
+                      href="https://www.cabergs.org.br/"
+                      target="_blank"
+                      class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
+                    >
+                      <i class="fas fa-link"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Cabergs</h3>
+            <p class="text-gray-600 mb-4">
+              Desenvolvi e atualizei páginas e sistemas com foco em C# e
+              ASP.NET, garantindo a entrega de soluções robustas e eficientes.
+              Identifiquei e corrigi bugs, realizei análise detalhada de erros e
+              otimizei o desempenho dos sistemas. Executei testes funcionais e
+              de qualidade, assegurando o bom funcionamento das aplicações antes
+              da entrega aos usuários finais. Implementei novas funcionalidades
+              e melhorias nos sistemas existentes, sempre alinhado às
+              necessidades dos projetos.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >C#</span
+              >
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >ASP.NET</span
+              >
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >PL/SQL</span
+              >
+            </div>
+          </div>
+
+          <!-- Caltech Agro -->
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg mb-6">
+              <img
+                src="assets/caltech.png"
+                alt="Caltech Agro"
+                class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <div class="p-6">
+                  <div class="flex space-x-3 mb-4">
+                    <a
+                      href="https://www.caltechagro.com/"
+                      target="_blank"
+                      class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
+                    >
+                      <i class="fas fa-link"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">
+              Caltech Agro - Robô de Relatórios
+            </h3>
+            <p class="text-gray-600 mb-4">
+              Desenvolvimento de uma solução automatizada de geração de
+              relatórios via WhatsApp, integrada a um sistema de gestão interno.
+              O robô processa mensagens recebidas, extrai dados relevantes e
+              gera relatórios PDF detalhados automaticamente. O sistema web
+              complementar permite visualização, gestão e análise dos relatórios
+              gerados, oferecendo uma interface intuitiva para acompanhamento e
+              controle das informações.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >Node.js</span
+              >
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >React</span
+              >
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >VPS Linux</span
+              >
+            </div>
+          </div>
+
+          <!-- Palladium Hotel Group -->
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg mb-6">
+              <img
+                src="assets/palladium.svg"
+                alt="Palladium Hotel Group"
+                class="w-full h-64 object-contain bg-gray-800/90 transition-transform duration-500 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <div class="p-6">
+                  <div class="flex space-x-3 mb-4">
+                    <a
+                      href="https://www.palladiumhotelgroup.com/pt"
+                      target="_blank"
+                      class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
+                    >
+                      <i class="fas fa-link"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Palladium Hotel Group</h3>
+            <p class="text-gray-600 mb-4">
+              Desenvolvimento de dois sistemas críticos para o Palladium Hotel
+              Group: um sistema completo de feedback de colaboradores com
+              avaliações de desempenho, métricas e relatórios personalizados; e
+              um sistema de controle de saída de materiais com assinatura
+              digital integrada, garantindo maior segurança e rastreabilidade
+              nos processos internos.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium"
+                >Laravel 10</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Contato Section -->
     <section id="contato" class="py-20 md:py-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Contato</span>
-                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6">Vamos <span class="gradient-text">conversar</span></h2>
-                <p class="text-lg text-gray-600">Tem um projeto em mente? Entre em contato para discutirmos como posso ajudar a transformar sua ideia em realidade.</p>
-            </div>
-            
-            <div class="flex flex-col lg:flex-row gap-12 justify-center">
-                
-                <div class="lg:w-1/2">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg h-full">
-                        <h3 class="text-2xl font-bold mb-8">Informações de Contato</h3>
-                        <div class="space-y-8">
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl mr-4">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold mb-1">Email</h4>
-                                    <p class="text-gray-600">kaua.3010@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl mr-4">
-                                    <i class="fab fa-whatsapp"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold mb-1">WhatsApp</h4>
-                                    <p class="text-gray-600"><a href="https://wa.me/5551993268867" target="_blank" class="hover:text-primary transition-colors">(51) 99326-8867</a></p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl mr-4">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold mb-1">Localização</h4>
-                                    <p class="text-gray-600">Porto Alegre, RS - Brasil</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-12">
-                            <h4 class="font-semibold mb-6">Redes Sociais</h4>
-                            <div class="flex space-x-4">
-                                <a href="https://github.com/kauatorres" class="w-12 h-12 bg-gray-100 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-colors">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="https://linkedin.com/in/kauatorress" class="w-12 h-12 bg-gray-100 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-colors">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="https://instagram.com/kauatorress" class="w-12 h-12 bg-gray-100 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-colors">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6"
+            >Contato</span
+          >
+          <h2 class="text-4xl md:text-5xl font-bold font-display mb-6">
+            Vamos <span class="gradient-text">conversar</span>
+          </h2>
+          <p class="text-lg text-gray-600">
+            Tem um projeto em mente? Entre em contato para discutirmos como
+            posso ajudar a transformar sua ideia em realidade.
+          </p>
         </div>
+
+        <div class="flex flex-col lg:flex-row gap-12 justify-center">
+          <div class="lg:w-1/2">
+            <div class="bg-white p-8 rounded-2xl shadow-lg h-full">
+              <h3 class="text-2xl font-bold mb-8">Informações de Contato</h3>
+              <div class="space-y-8">
+                <div class="flex items-start">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl mr-4"
+                  >
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Email</h4>
+                    <p class="text-gray-600">kaua.3010@gmail.com</p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl mr-4"
+                  >
+                    <i class="fab fa-whatsapp"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">WhatsApp</h4>
+                    <p class="text-gray-600">
+                      <a
+                        href="https://wa.me/5551993268867"
+                        target="_blank"
+                        class="hover:text-primary transition-colors"
+                        >(51) 99326-8867</a
+                      >
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl mr-4"
+                  >
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Localização</h4>
+                    <p class="text-gray-600">Porto Alegre, RS - Brasil</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-12">
+                <h4 class="font-semibold mb-6">Redes Sociais</h4>
+                <div class="flex space-x-4">
+                  <a
+                    href="https://github.com/kauatorres"
+                    class="w-12 h-12 bg-gray-100 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-colors"
+                  >
+                    <i class="fab fa-github"></i>
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/kauatorress"
+                    class="w-12 h-12 bg-gray-100 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-colors"
+                  >
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a
+                    href="https://instagram.com/kauatorress"
+                    class="w-12 h-12 bg-gray-100 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-colors"
+                  >
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-16">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
-                <div class="mb-8 md:mb-0 text-center md:text-left">
-                    <h2 class="text-3xl font-bold font-display gradient-text mb-2">Kauã Torres</h2>
-                    <p class="text-gray-400">Desenvolvedor de Software</p>
-                </div>
-                <div class="flex flex-col md:flex-row md:space-x-12 space-y-8 md:space-y-0 mb-8 md:mb-0 text-center md:text-left">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Links Rápidos</h3>
-                        <ul class="space-y-3">
-                            <li><a href="#sobre" class="text-gray-400 hover:text-white transition-colors">Sobre</a></li>
-                            <li><a href="#habilidades" class="text-gray-400 hover:text-white transition-colors">Habilidades</a></li>
-                            <li><a href="#projetos" class="text-gray-400 hover:text-white transition-colors">Projetos</a></li>
-                            <li><a href="#contato" class="text-gray-400 hover:text-white transition-colors">Contato</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Redes Sociais</h3>
-                        <ul class="space-y-3">
-                            <li><a href="https://github.com/kauatorres" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
-                            <li><a href="https://linkedin.com/in/kauatorress" class="text-gray-400 hover:text-white transition-colors">LinkedIn</a></li>
-                            <li><a href="https://instagram.com/kauatorress" class="text-gray-400 hover:text-white transition-colors">Instagram</a></li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="container mx-auto px-6">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center mb-12"
+        >
+          <div class="mb-8 md:mb-0 text-center md:text-left">
+            <h2 class="text-3xl font-bold font-display gradient-text mb-2">
+              Kauã Torres
+            </h2>
+            <p class="text-gray-400">Desenvolvedor de Software</p>
+          </div>
+          <div
+            class="flex flex-col md:flex-row md:space-x-12 space-y-8 md:space-y-0 mb-8 md:mb-0 text-center md:text-left"
+          >
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Links Rápidos</h3>
+              <ul class="space-y-3">
+                <li>
+                  <a
+                    href="#sobre"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Sobre</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#habilidades"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Habilidades</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#projetos"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Projetos</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#contato"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Contato</a
+                  >
+                </li>
+              </ul>
             </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Redes Sociais</h3>
+              <ul class="space-y-3">
+                <li>
+                  <a
+                    href="https://github.com/kauatorres"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >GitHub</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://linkedin.com/in/kauatorress"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >LinkedIn</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instagram.com/kauatorress"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Instagram</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            menuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    mobileMenu.classList.add('hidden');
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.getElementById("menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
+        menuButton.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
         });
+
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            mobileMenu.classList.add("hidden");
+
+            const targetId = this.getAttribute("href");
+            const targetElement = document.querySelector(targetId);
+
+            targetElement.scrollIntoView({
+              behavior: "smooth",
+            });
+          });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            const targetElement = document.querySelector(targetId);
+
+            targetElement.scrollIntoView({
+              behavior: "smooth",
+            });
+          });
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
